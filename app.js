@@ -1,8 +1,9 @@
 var ConversationV1 = require('watson-developer-cloud/conversation/v1');
 var TextToSpeechV1 = require('watson-developer-cloud/text-to-speech/v1');
-var SoundPlayer = require('soundplayer')
 
-var player = new SoundPlayer();
+var express = require('express');        // call express
+var app = express();                 // define our app using express
+var bodyParser = require('body-parser');
 
 var conversation = new ConversationV1({
     username: 'bfb29879-fb28-4d20-9c0e-9161bf96f314',
@@ -10,17 +11,31 @@ var conversation = new ConversationV1({
     version_date: ConversationV1.VERSION_DATE_2017_05_26
 });
 
-message = conversation.message({
-    input: { text: 'My last 666 incocming calls' },
-    workspace_id: '0ba8b54f-29fd-4775-aa77-202efa0d8b8e'
-}, function (err, response) {
-    if (err) {
-        console.error(err);
-    } else {
-        console.log(response);
-        sayIt(response.output.text[0]);
-    }
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
+var port = process.env.PORT || 44444
+
+var router = express.Router();              // get an instance of the express Router
+
+app.use('/api', router);
+
+router.get('/', function (req, res) {
+    var question = req.param('question')
+    message = conversation.message({
+        input: { text: question },
+        workspace_id: '0ba8b54f-29fd-4775-aa77-202efa0d8b8e'
+    }, function (err, response) {
+        if (err) {
+            console.error(err);
+        } else {
+            console.log(response);
+            res.json({ message: response.output.text[0] });
+        }
+    });
 });
+
+app.listen(port);
 
 function sayIt(string) {
     // var text_to_speech = new TextToSpeechV1({

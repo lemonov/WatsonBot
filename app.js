@@ -14,7 +14,7 @@ var conversation = new ConversationV1({
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-var port = process.env.PORT || 44444
+var port = process.env.PORT || 80
 
 var router = express.Router();              // get an instance of the express Router
 

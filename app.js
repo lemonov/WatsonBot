@@ -68,8 +68,6 @@ function lastCalls(text, params) {
     var type = "";
     var count = 0;
     params.forEach(function (element) {
-        console.log(element.entity + " : " + element.value);
-
         switch (element.entity) {
             case 'call_type':
                 type = element.value;
@@ -79,13 +77,9 @@ function lastCalls(text, params) {
                 break;
         }
     });
-    console.log(type)
-    console.log(count)
-
+    if(count == 0) {count = 10 } 
     calls = getPhoneCalls(count, type)
-    console.log(calls)
     text = text.replace("^user_calls", calls)
-    console.log("RESPONSE: " + text)
     return text
 }
 

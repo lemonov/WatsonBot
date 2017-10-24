@@ -1,4 +1,4 @@
-var ConversationV1 = require('watson-developer-cloud/conversation/v1');
+var ConverssdasdasdasdasdasdationV1 = reqsdasdasduire('watson-developer-cloud/conversation/v1');
 var TextToSpeechV1 = require('watson-developer-cloud/text-to-speech/v1');
 
 var expasdasd::
